@@ -8,10 +8,12 @@ import (
 
 type stack struct {
 	Numbers []int
+	Hist    []string
 }
 
 func (s *stack) Push(data int) {
 	s.Numbers = append(s.Numbers, data)
+	s.Hist = append(s.Hist, "pushed"+string(data))
 }
 
 func (s *stack) Pop() int {
@@ -19,13 +21,15 @@ func (s *stack) Pop() int {
 		return 0
 	}
 	last := len(s.Numbers) - 1
+	s.Hist = append(s.Hist, "del"+string(s.Numbers[last]))
 	s.Numbers = s.Numbers[:len(s.Numbers)-1]
+
 	return last
 
 }
 func (s *stack) lastI() int {
 	last := s.Numbers[len(s.Numbers)-1]
-
+	s.Hist = append(s.Hist, "del"+string(last))
 	return last
 }
 func (s *stack) Isempty() bool {
@@ -38,9 +42,9 @@ func (s *stack) Isempty() bool {
 func main() {
 
 	var Num = stack{}
-	Num.Push(1)
-	Num.Push(2)
-	Num.Push(3)
+	//Num.Push(1)
+	//Num.Push(2)
+	//Num.Push(3)
 
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -57,13 +61,13 @@ func main() {
 			print(Num.lastI())
 
 		case "-hist":
-			fmt.Println(Num.Numbers)
+			fmt.Println()
 
 		default:
 			fmt.Println(input)
 
 		}
 	}
-
-	//fmt.Println(Num)
+	//
+	//	//fmt.Println(Num)
 }
